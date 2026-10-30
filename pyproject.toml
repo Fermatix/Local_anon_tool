@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "localanon"
+version = "0.1.0"
+description = "Local pre-cleaning of project exports before anonymization (no network at run time)"
+requires-python = ">=3.11"
+dependencies = [
+    "onnxruntime",
+    "tokenizers",
+    "natasha",
+    # pymorphy2 (a natasha dependency) imports pkg_resources: Python 3.12+ venvs come without setuptools,
+    # and newer setuptools drop pkg_resources
+    "setuptools<81",
+    "pymupdf",
+    "faster-whisper",
+    "imageio-ffmpeg",
+    "phonenumbers",
+]
+
+[project.optional-dependencies]
+# gliner-x-large on top of the name model ([ner].gliner): torch is heavy and off by default
+gliner = ["gliner", "torch"]
+# Filter and name model on an NVIDIA card. run.sh / run.ps1 install it last and remove the CPU
+# onnxruntime (both write the same onnxruntime module).
+gpu = ["onnxruntime-gpu", "tokenizers"]
+
+[project.scripts]
+localanon = "localanon.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["localanon*", "anonymizer*"]

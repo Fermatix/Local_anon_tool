@@ -1,0 +1,18 @@
+# the models archive and what run.sh / run.ps1 unpack from it
+localanon-models*.zip
+models/
+# set up by run.sh / run.ps1
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+# your settings (the salt stays on this machine) and results
+localanon.toml
+out/
+# editors and OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
